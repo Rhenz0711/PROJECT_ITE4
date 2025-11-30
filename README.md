@@ -1,6 +1,8 @@
 # VideoToASCII
 
-Ensure the Console Window is Large Enough (Set to Full Screen for Best Results).
+MAKE SURE YOUR MONITOR HAS 1920x1080 Display Resolution or else the code will not work as intended!!!
+
+1. Set Monitor to Full Screen
 
 Tutorial To Maximize Console Window Size:
 1. Open Command Prompt (cmd).
