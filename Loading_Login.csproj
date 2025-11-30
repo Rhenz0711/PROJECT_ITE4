@@ -8,6 +8,116 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="FileResources\Accessed.txt" />
+    <None Remove="FileResources\basic.mp3" />
+    <None Remove="FileResources\basic.png" />
+    <None Remove="FileResources\BasicMenu.txt" />
+    <None Remove="FileResources\BlockedAccess.gif" />
+    <None Remove="FileResources\BlockedAccess.mp3" />
+    <None Remove="FileResources\BlockedAccess.txt" />
+    <None Remove="FileResources\clap.mp3" />
+    <None Remove="FileResources\Credits.txt" />
+    <None Remove="FileResources\Enter.MP3" />
+    <None Remove="FileResources\entertainment.png" />
+    <None Remove="FileResources\EntertainmentMenu.txt" />
+    <None Remove="FileResources\intermediate.png" />
+    <None Remove="FileResources\IntermediateMenu.txt" />
+    <None Remove="FileResources\loading.MP3" />
+    <None Remove="FileResources\LoadingScreen.mp3" />
+    <None Remove="FileResources\LoadingScreen.mp4" />
+    <None Remove="FileResources\LoadingScreen.txt" />
+    <None Remove="FileResources\LoadingScreen2.mp4" />
+    <None Remove="FileResources\login.png" />
+    <None Remove="FileResources\LoginUI.txt" />
+    <None Remove="FileResources\menu.mp3" />
+    <None Remove="FileResources\menu.png" />
+    <None Remove="FileResources\menu.txt" />
+    <None Remove="FileResources\sales_trans.txt" />
+    <None Remove="FileResources\test.mp4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="FileResources\Accessed.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\basic.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\basic.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\BasicMenu.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\BlockedAccess.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\BlockedAccess.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\BlockedAccess.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\clap.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\Credits.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\Enter.MP3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\entertainment.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\EntertainmentMenu.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\intermediate.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\IntermediateMenu.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\loading.MP3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\LoadingScreen.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\LoadingScreen.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\LoadingScreen.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\LoadingScreen2.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\login.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\LoginUI.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\menu.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\menu.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\menu.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\sales_trans.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FileResources\test.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="OpenCvSharp4" Version="4.11.0.20250507" />
     <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.11.0.20250507" />

@@ -28,7 +28,7 @@ class Credits
                 if (boxLines == 40)
                 {
                     SpecialAudio();
-                    Thread.Sleep(2000);
+                    Thread.Sleep(1000);
                 }
 
                 if (boxLines % 10 == 0)

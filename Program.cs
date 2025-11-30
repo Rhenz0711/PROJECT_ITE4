@@ -182,10 +182,10 @@ class Program
 static class Resources
 {
     private static readonly string BasePath = AppDomain.CurrentDomain.BaseDirectory;
-    private const string SOURCE_FOLDER = "src";
+    private const string RESOURCE_FOLDER = "FileResources";
 
-    /// <summary>Builds full resource path from folder and filename.</summary>
-    private static string GetResourcePath(string filename) => Path.Combine(BasePath, SOURCE_FOLDER, filename);
+    private static string GetResourcePath(string filename) =>
+        Path.Combine(BasePath, RESOURCE_FOLDER, filename);
 
     // Video resources
     public static string LoadingScreen() => GetResourcePath("LoadingScreen.mp4");
