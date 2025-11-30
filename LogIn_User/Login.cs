@@ -9,7 +9,6 @@ class Login
     private static bool showCredentialActivated = false;
     private static int tries;
 
-    //private  const int[] EMAILBOXPOS = new int[] { (Console.WindowWidth / 2) - 15),  (Console.WindowHeight - 25) };
     public static bool ShowLoginPage()
     {
         bool authenticated = false;
