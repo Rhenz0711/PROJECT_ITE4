@@ -50,14 +50,16 @@ class Program
             // Enable ANSI color support in Windows Terminal
             EnableAsciiColor();
 
-            PlayLoadingScreen(Resources.LoadingScreen(), Resources.LoadingAudio(), Resources.LoadingTxt(), DEFAULT_ASCII_WIDTH, DEFAULT_TARGET_FPS, LOADING_TEXT_COLOR);
+            //PlayLoadingScreen(Resources.LoadingScreen(), Resources.LoadingAudio(), Resources.LoadingTxt(), DEFAULT_ASCII_WIDTH, DEFAULT_TARGET_FPS, LOADING_TEXT_COLOR);
 
             //Run LoginPage first, then display menu if authenticated
-            if (Login.ShowLoginPage())
-            {
-                MenuAudio();
-                Menu.DisplayMainMenu();
-            }
+            //if (Login.ShowLoginPage())
+            //    {
+            //        MenuAudio();
+            //        Menu.DisplayMainMenu();
+            //    }
+
+            Intermediate.Sales_Trans();
 
         }
         catch (Exception ex)

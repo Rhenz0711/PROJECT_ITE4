@@ -359,14 +359,29 @@ namespace Loading_Login.MenuScreen
                     Console.ResetColor();
                     Program.EnterAudio();
 
-                    quant = Convert.ToInt32(HandleInputError("Quantity for "));
+
+                    while (!int.TryParse(Console.ReadLine(), out quant))
+                    {
+
+                        Console.SetCursorPosition(10, Console.CursorTop);
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("Invalid!");
+                        Console.ResetColor();
+                        Console.SetCursorPosition(10, Console.CursorTop + 1);
+                        Console.Write("Quantity for ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(itemName + ": ");
+                        Console.ResetColor();
+                        Program.EnterAudio();
+                    }
+
 
                     orderNames.Add(itemName);
                     orderPrices.Add(itemPrice);
                     orderQtys.Add(quant);
 
                     Console.SetCursorPosition(10, Console.CursorTop);
-                    Console.Write("Would you like another purchase? (Y/N)");
+                    Console.Write("Would you like another purchase? (Y/N): ");
                     Program.EnterAudio();
                     finishOrder = Console.ReadLine();
 
@@ -477,7 +492,7 @@ namespace Loading_Login.MenuScreen
                 Console.ResetColor();
                 Console.WriteLine("Needed: " + totalprice);
                 Console.WriteLine("You gave: " + cashpaid);
-                Console.WriteLine("\nPress R to go back to Food Menu");
+                Console.Write("\nPress R to go back to Food Menu: ");
 
                 string choice = Console.ReadLine().ToUpper();
                 Program.EnterAudio();
