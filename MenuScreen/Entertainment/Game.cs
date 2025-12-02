@@ -12,7 +12,7 @@ namespace Loading_Login.MenuScreen.Entertainment
     class Game
     {
         #region Constants
-        private const int GAME_WIDTH = 50;
+        private const int GAME_WIDTH = 48;
         private const int GAME_HEIGHT = 30;
         private const int ROAD_WIDTH = 10;
         private const int RENDER_DELAY_MS = 33;
@@ -105,8 +105,6 @@ namespace Loading_Login.MenuScreen.Entertainment
                     _windowWidth = Console.WindowWidth = GAME_WIDTH + 1;
                 if (_windowHeight < GAME_HEIGHT)
                     _windowHeight = Console.WindowHeight = GAME_HEIGHT + 1;
-                Console.BufferWidth = _windowWidth;
-                Console.BufferHeight = _windowHeight;
             }
         }
 
