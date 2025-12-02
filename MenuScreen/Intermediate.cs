@@ -10,7 +10,7 @@ namespace Loading_Login.MenuScreen
     class Intermediate
     {
         // Var of Sales_Trans
-        private static int[] pointer_pos = { 15, 17, 19, 21, 32, 34, 36, 38, 49, 51, 53 };
+        private static int[] pointer_pos = { 9, 11, 13, 15, 21, 23, 25, 27, 33, 35, 37};
 
         static readonly int left = 7, top = 3;
 
@@ -77,10 +77,9 @@ namespace Loading_Login.MenuScreen
 
             // Output table
             Console.Clear();
-            PrintBG();
             Console.SetCursorPosition(left, top);
 
-            string line = new string('*', 150);
+            string line = new string('*', 100);
 
             Console.ForegroundColor = ConsoleColor.Green;
 
@@ -88,7 +87,7 @@ namespace Loading_Login.MenuScreen
 
             Console.SetCursorPosition(left, Console.CursorTop);
             Console.WriteLine(
-                "{0,-20} | {1,-40} | {2,-15} | {3,-30} | {4,-10} | {5,-30}",
+                "{0,-15} | {1,-25} | {2,-10} | {3,-10} | {4,-10} | {5,-5}",
                 "Student Number", "Full Name", "Birthday", "Course", "Section", "Municipality");
 
             Console.SetCursorPosition(left, Console.CursorTop);
@@ -121,7 +120,7 @@ namespace Loading_Login.MenuScreen
 
                 Console.SetCursorPosition(left, Console.CursorTop);
                 Console.WriteLine(
-                    "{0,-20} | {1,-40} | {2,-15} | {3,-30} | {4,-10} | {5,-30}",
+                    "{0,-15} | {1,-25} | {2,-10} | {3,-10} | {4,-10} | {5,-5}",
                     snumber[i], fullname, bday[i], course[i], section[i], municipality[i]);
             }
 
@@ -284,21 +283,20 @@ namespace Loading_Login.MenuScreen
                 {
                     Console.Clear();
 
-                    PrintBG();
                     PrintFoodMenu();
 
-                    Console.SetCursorPosition(10, 30);
+                    Console.SetCursorPosition(Console.WindowWidth-56, 5);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("USE ARROW UP AND DOWN TO CHOOSE YOUR ITEMS");
+
+
+                    Console.SetCursorPosition(10, 10);
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write("Customer No: " + customerNo);
                     Console.ResetColor();
 
-                    Console.SetCursorPosition(10, Console.CursorTop + 2);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("USE ARROW UP AND DOWN TO CHOOSE YOUR ITEMS");
-
-                    Menu.PrintPointer(pointer_pos, 0);
-                    int food_select = Menu.MenuSelect(pointer_pos);
-
+                    Menu.PrintPointer(pointer_pos, 0, false);
+                    int food_select = Menu.MenuSelect(pointer_pos, false);
 
                     string itemName = "";
                     int itemPrice = 0, quant;
@@ -351,7 +349,7 @@ namespace Loading_Login.MenuScreen
                             break;
                     }
 
-                    Console.SetCursorPosition(10, 35);
+                    Console.SetCursorPosition(10, 12);
                     Console.ResetColor();
                     Console.Write("Quantity for ");
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -408,23 +406,21 @@ namespace Loading_Login.MenuScreen
             string[] menutitle = File.ReadAllLines(Resources.FoodMenu());
 
             ConsoleColor[] colors = { ConsoleColor.DarkRed, ConsoleColor.DarkGreen, ConsoleColor.Cyan };
-            // menuLines = start of line in the console
-            // boxLines = start of line after the menuLines > topGap
             int menuLines = 1, boxLines = 0;
 
             foreach (var line in menutitle)
             {
                 if (menuLines >= 7)
                 {
-                    if (boxLines >= 0 && boxLines <= 7)
+                    if (boxLines >= 0 && boxLines <= 2)
                     {
                         Console.ForegroundColor = colors[0];
                     }
-                    else if (boxLines >= 17 && boxLines <= 24)
+                    else if (boxLines >= 12 && boxLines <= 14)
                     {
                         Console.ForegroundColor = colors[1];
                     }
-                    else if (boxLines >= 34 && boxLines <= 41)
+                    else if (boxLines >= 24 && boxLines <= 26)
                     {
                         Console.ForegroundColor = colors[2];
                     }
@@ -482,15 +478,19 @@ namespace Loading_Login.MenuScreen
 
         static void Payment(int totalprice)
         {
-            Console.Write("\n\n\nInput Cash: ");
+            Console.SetCursorPosition(left, Console.CursorTop + 4);
+            Console.Write("Input Cash: ");
             double cashpaid = HandleInputError("Input Cash: ", false);
 
             while (cashpaid < totalprice)
             {
+                Console.SetCursorPosition(left, Console.CursorTop);
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Insufficient Cash!");
                 Console.ResetColor();
+                Console.SetCursorPosition(left, Console.CursorTop);
                 Console.WriteLine("Needed: " + totalprice);
+                Console.SetCursorPosition(left, Console.CursorTop);
                 Console.WriteLine("You gave: " + cashpaid);
                 Console.Write("\nPress R to go back to Food Menu: ");
 
@@ -510,6 +510,7 @@ namespace Loading_Login.MenuScreen
             }
             double cashchange = cashpaid - totalprice;
 
+            Console.SetCursorPosition(left, Console.CursorTop + 3);
             Console.Write("Change: ");
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(cashchange);
@@ -540,6 +541,7 @@ namespace Loading_Login.MenuScreen
                 {
                     Console.Clear();
                     PrintBG();
+                    Console.SetCursorPosition(left, top);
                 }
 
                 Console.SetCursorPosition(left, Console.CursorTop);

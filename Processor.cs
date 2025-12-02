@@ -22,8 +22,8 @@ class Processor
     private readonly int _textColor;
     private readonly string[][] _loadingKeyframes;
 
-    private static readonly string[] ImageExtensions = { ".jpg", ".jpeg", ".png", ".bmp", ".gif", ".tiff" };
-    private static readonly string[] VideoExtensions = { ".mp4", ".avi", ".mov", ".mkv", ".flv", ".wmv", ".webm", ".m4v" };
+    private static readonly string[] ImageExtensions = { ".jpg", ".jpeg", ".png", ".bmp", ".tiff" };
+    private static readonly string[] VideoExtensions = { ".mp4", ".avi", ".mov", ".mkv", ".flv", ".wmv", ".webm", ".m4v", ".gif" };
 
     // Pre-cached display parameters to avoid recalculation every frame
     private int _maxLoadingWidth;

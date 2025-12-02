@@ -43,6 +43,7 @@ namespace Loading_Login.MenuScreen.Entertainment
         #endregion
 
         #region Public Methods
+
         /// <summary>
         /// Starts the driving game loop.
         /// </summary>
@@ -50,19 +51,15 @@ namespace Loading_Login.MenuScreen.Entertainment
         {
             _keepPlaying = true;
             Console.CursorVisible = false;
-
             try
             {
                 InitializeGame();
                 ShowLaunchScreen();
-
                 while (_keepPlaying)
                 {
                     Program.StopPreviousAudio();
                     Program.PlayAudio(Resources.LoadingAudio());
-
                     InitializeScene();
-
                     while (_gameRunning)
                     {
                         if (!IsConsoleValidSize())
@@ -71,19 +68,15 @@ namespace Loading_Login.MenuScreen.Entertainment
                             _keepPlaying = false;
                             break;
                         }
-
                         HandleInput();
                         Update();
                         Render();
-
                         if (_gameRunning)
                             Thread.Sleep(RENDER_DELAY_MS);
                     }
-
                     if (_keepPlaying)
                         ShowGameOverScreen();
                 }
-
                 DisplayExitMessage();
             }
             finally
@@ -94,6 +87,7 @@ namespace Loading_Login.MenuScreen.Entertainment
         #endregion
 
         #region Private Methods - Initialization
+
         /// <summary>
         /// Initializes the game environment and console settings.
         /// </summary>
@@ -101,20 +95,16 @@ namespace Loading_Login.MenuScreen.Entertainment
         {
             _windowWidth = Console.WindowWidth;
             _windowHeight = Console.WindowHeight;
-
             // Calculate centering padding
             _leftPadding = Math.Max(0, (_windowWidth - GAME_WIDTH) / 2);
             _topPadding = Math.Max(0, (_windowHeight - GAME_HEIGHT) / 2);
-
             // .NET Framework does not support OperatingSystem.IsWindows()
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
                 if (_windowWidth < GAME_WIDTH)
                     _windowWidth = Console.WindowWidth = GAME_WIDTH + 1;
-
                 if (_windowHeight < GAME_HEIGHT)
                     _windowHeight = Console.WindowHeight = GAME_HEIGHT + 1;
-
                 Console.BufferWidth = _windowWidth;
                 Console.BufferHeight = _windowHeight;
             }
@@ -129,12 +119,9 @@ namespace Loading_Login.MenuScreen.Entertainment
             _carPosition = GAME_WIDTH / 2;
             _carVelocity = 0;
             _score = 0;
-
             int leftEdge = (GAME_WIDTH - ROAD_WIDTH) / 2;
             int rightEdge = leftEdge + ROAD_WIDTH + 1;
-
             _scene = new char[GAME_HEIGHT, GAME_WIDTH];
-
             for (int i = 0; i < GAME_HEIGHT; i++)
             {
                 for (int j = 0; j < GAME_WIDTH; j++)
@@ -146,17 +133,16 @@ namespace Loading_Login.MenuScreen.Entertainment
         #endregion
 
         #region Private Methods - Rendering
+
         /// <summary>
         /// Displays the launch screen with game instructions.
         /// </summary>
         private static void ShowLaunchScreen()
         {
             Console.Clear();
-
             // Calculate center position
             int centerX = (_windowWidth - 30) / 2; // Approximate center for ~30 char text
             int centerY = (_windowHeight - 5) / 2;
-
             string[] lines = new[]
             {
                 "This is a driving game.",
@@ -167,7 +153,6 @@ namespace Loading_Login.MenuScreen.Entertainment
                 "",
                 "Press [enter] to start..."
             };
-
             // Display each line centered
             for (int i = 0; i < lines.Length; i++)
             {
@@ -175,18 +160,18 @@ namespace Loading_Login.MenuScreen.Entertainment
                 Console.SetCursorPosition(lineX, centerY + i);
                 Console.Write(lines[i]);
             }
-
             WaitForKeypress(new[] { ConsoleKey.Enter, ConsoleKey.Escape });
         }
 
         /// <summary>
-        /// Renders the scoreboard in the top right corner.
+        /// Renders the scoreboard in the bottom right corner.
         /// </summary>
         private static void RenderScoreboard()
         {
             string scoreText = "Score: " + _score;
-
-            Console.SetCursorPosition((Console.WindowWidth/ 2) - scoreText.Length + 5 , (Console.WindowHeight/2) + 20 );
+            int scoreY = Math.Min(_topPadding + GAME_HEIGHT, Console.WindowHeight - 1);
+            int scoreX = Math.Max(0, Console.WindowWidth - scoreText.Length - 2);
+            Console.SetCursorPosition(scoreX, scoreY);
             Console.Write(scoreText);
         }
 
@@ -196,23 +181,18 @@ namespace Loading_Login.MenuScreen.Entertainment
         private static void Render()
         {
             StringBuilder sb = new StringBuilder((_leftPadding + GAME_WIDTH) * GAME_HEIGHT);
-
             for (int i = GAME_HEIGHT - 1; i >= 0; i--)
             {
                 sb.Append(new string(' ', _leftPadding)); // Add left padding
-
                 for (int j = 0; j < GAME_WIDTH; j++)
                 {
                     sb.Append(GetCharAtPosition(i, j));
                 }
-
                 if (i > 0)
                     sb.AppendLine();
             }
-
             Console.SetCursorPosition(0, _topPadding);
             Console.Write(sb.ToString());
-
             // Render scoreboard after game scene
             RenderScoreboard();
         }
@@ -225,11 +205,10 @@ namespace Loading_Login.MenuScreen.Entertainment
             if (row == 1 && col == _carPosition)
             {
                 return !_gameRunning ? CAR_STOPPED :
-                       _carVelocity < 0 ? CAR_LEFT :
-                       _carVelocity > 0 ? CAR_RIGHT :
-                       CAR_STRAIGHT;
+                    _carVelocity < 0 ? CAR_LEFT :
+                    _carVelocity > 0 ? CAR_RIGHT :
+                    CAR_STRAIGHT;
             }
-
             return _scene[row, col];
         }
 
@@ -239,7 +218,6 @@ namespace Loading_Login.MenuScreen.Entertainment
         private static void ShowGameOverScreen()
         {
             Console.Clear();
-
             string[] lines = new[]
             {
                 "Game Over",
@@ -249,21 +227,16 @@ namespace Loading_Login.MenuScreen.Entertainment
                 "Press [Y] or [Enter] to Play Again",
                 "Press [N] or [Escape] to Exit"
             };
-
             int centerY = Math.Max(0, (_windowHeight - lines.Length) / 2);
-
             for (int i = 0; i < lines.Length; i++)
             {
                 int centerX = Math.Max(0, (_windowWidth - lines[i].Length) / 2);
                 Console.SetCursorPosition(centerX, centerY + i);
                 Console.Write(lines[i]);
             }
-
             ConsoleKey key = WaitForKeypress(new[] { ConsoleKey.Y, ConsoleKey.N, ConsoleKey.Enter, ConsoleKey.Escape });
             _keepPlaying = (key == ConsoleKey.Y || key == ConsoleKey.Enter);
-
         }
-
 
         /// <summary>
         /// Displays the exit message based on the reason for closing.
@@ -277,18 +250,15 @@ namespace Loading_Login.MenuScreen.Entertainment
                 Console.WriteLine("Minimum size is {0} width x {1} height.", GAME_WIDTH, GAME_HEIGHT);
                 Console.WriteLine("Increase the size of the console window.");
             }
-
             Program.StopPreviousAudio();
-
             Console.SetCursorPosition((Console.WindowWidth / 2) - 15, Console.WindowHeight / 2);
             Console.WriteLine("Drive was closed.");
-
-
             Menu.ExitOption((Console.WindowWidth / 2) - 15, Console.CursorTop);
         }
         #endregion
 
         #region Private Methods - Input & Logic
+
         /// <summary>
         /// Handles player input for car movement and game control.
         /// </summary>
@@ -297,26 +267,22 @@ namespace Loading_Login.MenuScreen.Entertainment
             while (Console.KeyAvailable)
             {
                 ConsoleKey key = Console.ReadKey(true).Key;
-
                 switch (key)
                 {
                     case ConsoleKey.A:
                     case ConsoleKey.LeftArrow:
                         _carVelocity = -1;
                         break;
-
                     case ConsoleKey.D:
                     case ConsoleKey.RightArrow:
                         _carVelocity = 1;
                         break;
-
                     case ConsoleKey.W:
                     case ConsoleKey.UpArrow:
                     case ConsoleKey.S:
                     case ConsoleKey.DownArrow:
                         _carVelocity = 0;
                         break;
-
                     case ConsoleKey.Escape:
                         _gameRunning = false;
                         _keepPlaying = false;
@@ -359,14 +325,11 @@ namespace Loading_Login.MenuScreen.Entertainment
             int roadUpdate = (_rng.Next(ROAD_SHIFT_PROBABILITY) < ROAD_SHIFT_THRESHOLD)
                 ? _previousRoadUpdate
                 : _rng.Next(3) - 1;
-
             // Prevent road from shifting out of bounds
             if (roadUpdate == -1 && _scene[GAME_HEIGHT - 1, 0] == ROAD_CHAR)
                 roadUpdate = 1;
-
             if (roadUpdate == 1 && _scene[GAME_HEIGHT - 1, GAME_WIDTH - 1] == ROAD_CHAR)
                 roadUpdate = -1;
-
             // Shift the road left or right
             ShiftRoadRow(roadUpdate);
             _previousRoadUpdate = roadUpdate;
@@ -381,14 +344,12 @@ namespace Loading_Login.MenuScreen.Entertainment
             {
                 for (int i = 0; i < GAME_WIDTH - 1; i++)
                     _scene[GAME_HEIGHT - 1, i] = _scene[GAME_HEIGHT - 1, i + 1];
-
                 _scene[GAME_HEIGHT - 1, GAME_WIDTH - 1] = GRASS_CHAR;
             }
             else if (direction == 1)
             {
                 for (int i = GAME_WIDTH - 1; i > 0; i--)
                     _scene[GAME_HEIGHT - 1, i] = _scene[GAME_HEIGHT - 1, i - 1];
-
                 _scene[GAME_HEIGHT - 1, 0] = GRASS_CHAR;
             }
         }
@@ -399,7 +360,6 @@ namespace Loading_Login.MenuScreen.Entertainment
         private static void MoveCarAndCheckCollision()
         {
             _carPosition += _carVelocity;
-
             // Check bounds and collision with grass
             if (_carPosition < 0 || _carPosition >= GAME_WIDTH || _scene[1, _carPosition] != ROAD_CHAR)
             {
@@ -415,7 +375,6 @@ namespace Loading_Login.MenuScreen.Entertainment
             while (true)
             {
                 ConsoleKey key = Console.ReadKey(true).Key;
-
                 if (validKeys.Contains(key))
                     return key;
             }

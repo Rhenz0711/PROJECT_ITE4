@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using NAudio.Wave;
 using Loading_Login.MenuScreen;
 using OpenCvSharp.Internal.Vectors;
+using Loading_Login.MenuScreen.Entertainment;
 
 /// <summary>
 /// Main entry point for ASCII video player application.
@@ -17,7 +18,7 @@ class Program
 {
     #region Constants
 
-    private const int DEFAULT_ASCII_WIDTH = 120;
+    private const int DEFAULT_ASCII_WIDTH = 100;
     private const int DEFAULT_TARGET_FPS = 15;
     private const int DEFAULT_TEXT_COLOR = 0xFFFFF; // White
     private const int LOADING_TEXT_COLOR = 0x07C801; // Green
@@ -28,7 +29,7 @@ class Program
     private static WaveOutEvent? outputDevice;
     private static AudioFileReader? audioFileRead;
 
-    
+
     #region Main Entry Point
 
     /// <summary>
@@ -36,36 +37,35 @@ class Program
     /// </summary>
     static void Main(string[] args)
     {
+        // 1336 x 768 = 148 (minus 1) x 39 to full screen
+        // 1920 x 1080 = 240 (minus 1) x 59 to full screen
+
+        Console.SetWindowSize(148, 39);
+        Console.SetBufferSize(200, 200);
 
         try
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            Console.Clear();
-
-            //// Get ASCII width from user
-            //int width = GetASCIIWidth();
 
             Console.Clear();
 
             // Enable ANSI color support in Windows Terminal
             EnableAsciiColor();
 
-            //PlayLoadingScreen(Resources.LoadingScreen(), Resources.LoadingAudio(), Resources.LoadingTxt(), DEFAULT_ASCII_WIDTH, DEFAULT_TARGET_FPS, LOADING_TEXT_COLOR);
+            PlayLoadingScreen(Resources.LoadingScreen(), Resources.LoadingAudio(), Resources.LoadingTxt(), DEFAULT_ASCII_WIDTH, DEFAULT_TARGET_FPS, LOADING_TEXT_COLOR);
 
-            //Run LoginPage first, then display menu if authenticated
-            //if (Login.ShowLoginPage())
-            //    {
-            //        MenuAudio();
-            //        Menu.DisplayMainMenu();
-            //    }
-
-            Intermediate.Sales_Trans();
+        //    //Run LoginPage first, then display menu if authenticated
+        if (Login.ShowLoginPage())
+        {
+            MenuAudio();
+            Menu.DisplayMainMenu();
+        }
 
         }
         catch (Exception ex)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"❌ Error: {ex}");    
+            Console.WriteLine($"❌ Error: {ex}");
             Console.ResetColor();
         }
     }

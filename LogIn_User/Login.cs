@@ -19,7 +19,6 @@ class Login
         PrintLogin();
 
         horizontalCenter("Type 67 on Password to get Account Credentials.", ConsoleColor.Red);
-        Console.WriteLine();
         horizontalCenter(">>>Click ENTER to Submit<<<", ConsoleColor.Green);
 
         if (ifErrorOnce)
@@ -28,17 +27,19 @@ class Login
         if (showCredentialActivated)
             ShowCredentials();
 
-
         //Block User
         if (tries == 3)
         {
             Console.Clear();
-            Program.PlayLoadingScreen(Resources.BlockedScreen(), Resources.BlockedAudio(), Resources.BlockedAccess(), width: 60, targetFps: 10, textColor: 0xFC0202, sleep: 0);
+            Console.SetCursorPosition(0, 0);
+            Program.PlayLoadingScreen(Resources.BlockedScreen(), Resources.BlockedAudio(), Resources.BlockedAccess(), width: 50, targetFps: 12, textColor: 0xFC0202, sleep: 0);
+            Program.PlayLoadingScreen(Resources.BlockedScreen(), Resources.BlockedAudio(), Resources.BlockedAccess(), width: 50, targetFps: 12, textColor: 0xFC0202, sleep: 0);
+            Thread.Sleep(2000);
             return false;
         }
 
         // Below: Get input
-        Console.SetCursorPosition((Console.WindowWidth / 2) - 15, Console.WindowHeight - 25); // E-mail box line position
+        Console.SetCursorPosition((Console.WindowWidth / 2) - 15, 21); // E-mail box line position
         string? user = Console.ReadLine();
         Program.EnterAudio();
         Console.SetCursorPosition((Console.WindowWidth / 2) - 15, Console.CursorTop + 4); // Password box line position
@@ -48,7 +49,7 @@ class Login
         // Correct Input
         if (user?.ToLower() == "nimda" && password?.ToLower() == "321nimda")
         {
-            Program.PlayLoadingScreen(Resources.LoadingScreen(), Resources.LoadingAuth(), Resources.LoginTxt(), width: 70, targetFps: 40, textColor: 0x07C801);
+            Program.PlayLoadingScreen(Resources.LoadingScreen(), Resources.LoadingAuth(), Resources.LoginTxt(), width: 70, targetFps: 60, textColor: 0x07C801);
             Menu.DisplayMainMenu();
             return true;
         }
@@ -77,7 +78,7 @@ class Login
         Console.SetCursorPosition(0, 0);
 
         string[] loginArt = File.ReadAllLines(Resources.LoginUI());
-        int lineStart = 2;
+        int lineStart = 5;
 
         foreach (var line in loginArt)
         {
@@ -90,6 +91,8 @@ class Login
     //Center Text Horizontally
     static void horizontalCenter(string message, ConsoleColor textColor = ConsoleColor.White)
     {
+        Console.WriteLine();
+        Console.WriteLine();
         int width = (Console.WindowWidth / 2) - message.Length / 2;
         for (int i = 0; i < width; i++)
         {
@@ -107,9 +110,11 @@ class Login
     }
     static void Invalid()
     {
-        Console.SetCursorPosition((Console.WindowWidth / 2) - 25, Console.CursorTop + 5); // Invalid box line position
+        int validTries = 3 - tries;
+        string message = "Invalid Username and Password. You have " + validTries  + " tries left";
+        Console.SetCursorPosition((Console.WindowWidth - message.Length)/2, Console.CursorTop + 2); // Invalid box line position
         Console.ForegroundColor = ConsoleColor.Red;
-        Console.Write("Invalid Username and Password. You have {0} tries left", 3 - tries);
+        Console.Write(message);
         //Console.SetCursorPosition(11, 11); // E-mail box line position
     }
 

@@ -10,17 +10,17 @@ namespace Loading_Login.MenuScreen
 
     class Menu
     {
-        static int LeftwindowWidth = (Console.WindowWidth - 50) / 2;
-        static int RightwindowWidth = (Console.WindowWidth + 50) / 2;
+        static int LeftwindowWidth = (Console.WindowWidth - 53) / 2;
+        static int RightwindowWidth = (Console.WindowWidth + 53) / 2;
         static int indexcursor = 0;
         static int MenuPointerIndex = 0;
 
         private static int[][] cursor_Position =
         {
-            new int[] { 18, 27, 35, 43 }, // Main Menu Pointer Position
-            new int[] { 18, 27, 35, 43 }, // Basic Menu Pointer Position
-            new int[] { 18, 27, 35, 43 },  // Intermediate Menu Pointer Position
-            new int[] { 18, 27, 35 }  // Entertainent Menu Pointer Position
+            new int[] { 10, 17, 24, 31 }, // Main Menu Pointer Position
+            new int[] { 10, 17, 24, 31 }, // Basic Menu Pointer Position
+            new int[] { 10, 17, 24, 31 },  // Intermediate Menu Pointer Position
+            new int[] { 10, 17, 24 }  // Entertainent Menu Pointer Position
         };
 
         // Exit Cursor Pos
@@ -33,7 +33,7 @@ namespace Loading_Login.MenuScreen
         {
             Console.Clear();
             Program.StopPreviousAudio();
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             Program.PlayAudio(Resources.MenuAudio());
 
             ProcessMenu(Resources.MenuTxt(), cursorPos: cursor_Position[0], isMain: true);
@@ -53,12 +53,12 @@ namespace Loading_Login.MenuScreen
             DisplayMenuOptions(menutxt);
 
             string message = "USE ARROW UP AND DOWN KEYS";
-            Console.SetCursorPosition((Console.WindowWidth - message.Length) / 2, Console.CursorTop + 4);
+            Console.SetCursorPosition((Console.WindowWidth - message.Length) / 2, Console.CursorTop + 2);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(message);
 
             // Initial Pointer
-            PrintPointer(cursorPos, 0);
+            PrintPointer(cursorPos, indexcursor);
             int cursorIndex = MenuSelect(cursorPos);
 
 
@@ -75,6 +75,7 @@ namespace Loading_Login.MenuScreen
                     LeftwindowWidth = (Console.WindowWidth - 50) / 2;
                     RightwindowWidth = (Console.WindowWidth + 50) / 2;
                     Program.EnterAudio();
+                    indexcursor = 0;
                     DisplayMainMenu();
                 }
                 
@@ -86,7 +87,7 @@ namespace Loading_Login.MenuScreen
                     //Basic Menu Select
                     case 0:
                         //Plays Loading Screen
-                        Program.PlayLoadingScreen(Resources.LoadingScreen2(), Resources.LoadingAuth(), Resources.LoginTxt(), width: 90, targetFps: 30, textColor: 0x07C801);
+                        Program.PlayLoadingScreen(Resources.LoadingScreen2(), Resources.LoadingAuth(), Resources.LoginTxt(), width: 70, targetFps: 30, textColor: 0x07C801);
                         Program.StopPreviousAudio();
 
                         //Display BgImage
@@ -111,7 +112,7 @@ namespace Loading_Login.MenuScreen
                     // Intermediate Menu Select
                     case 1:
                         //Plays Loading Screen
-                        Program.PlayLoadingScreen(Resources.LoadingScreen2(), Resources.LoadingAuth(), Resources.LoginTxt(), width: 90, targetFps: 30, textColor: 0x07C801);
+                        Program.PlayLoadingScreen(Resources.LoadingScreen2(), Resources.LoadingAuth(), Resources.LoginTxt(), width: 70, targetFps: 30, textColor: 0x07C801);
                         Program.StopPreviousAudio();
                         Console.Clear();
 
@@ -132,7 +133,7 @@ namespace Loading_Login.MenuScreen
                     //Entertainment Menu Select
                     case 2:
                         //Plays Loading Screen
-                        Program.PlayLoadingScreen(Resources.LoadingScreen2(), Resources.LoadingAuth(), Resources.LoginTxt(), width: 90, targetFps: 30, textColor: 0x07C801);
+                        Program.PlayLoadingScreen(Resources.LoadingScreen2(), Resources.LoadingAuth(), Resources.LoginTxt(), width: 70, targetFps: 30, textColor: 0x07C801);
                         Program.StopPreviousAudio();
                         
 
@@ -173,23 +174,23 @@ namespace Loading_Login.MenuScreen
                     Credits._Credits();
                     return;
             }
+
         }
 
         public static void DisplayMenuOptions(string menu)
         {
-            int topPos = 5;
+            int topPos = 0;
             string[] menutitle = File.ReadAllLines(menu);
 
-            ConsoleColor[] colors = { ConsoleColor.White, ConsoleColor.DarkRed, ConsoleColor.DarkGreen, ConsoleColor.Cyan };
-            // menuLines = start of line in the console
-            // boxLines = start of line after the menuLines > topGap
-            int menuLines = 1, colorIndex = 0, boxLines = 0;
+            ConsoleColor[] colors = { ConsoleColor.White, ConsoleColor.DarkRed, ConsoleColor.DarkMagenta, ConsoleColor.Cyan };
+
+            int startLine = 1, colorIndex = 0, boxLines = 0;
 
             foreach (var line in menutitle)
             {
-                if (menuLines >= 12)
+                if (startLine >= 9)
                 {
-                    if (boxLines % 8 == 0)
+                    if (boxLines % 7 == 0)
                     {
                         Console.ForegroundColor = colors[colorIndex];
                         colorIndex++;
@@ -200,11 +201,11 @@ namespace Loading_Login.MenuScreen
                 Console.SetCursorPosition((Console.WindowWidth - line.Length) / 2, topPos);
                 Console.WriteLine(line);
                 topPos++;
-                menuLines++;
+                startLine++;
             }
         }
 
-        public static int MenuSelect(int[] cursorPos)
+        public static int MenuSelect(int[] cursorPos, bool twoPointer = true)
         {
             Console.CursorVisible = false;
 
@@ -219,14 +220,14 @@ namespace Loading_Login.MenuScreen
                         RemovePreviousPointer(cursorPos, indexcursor);
                         indexcursor = (indexcursor == 0) ? cursorPos.Length - 1 : indexcursor - 1;
                         //Prints Pointer
-                        PrintPointer(cursorPos, indexcursor);
+                        PrintPointer(cursorPos, indexcursor, twoPointer);
                         break;
                     case ConsoleKey.DownArrow:
                         Program.EnterAudio();
                         RemovePreviousPointer(cursorPos, indexcursor);
                         indexcursor = (indexcursor == cursorPos.Length - 1) ? 0 : indexcursor + 1;
                         //Prints Pointer
-                        PrintPointer(cursorPos, indexcursor);
+                        PrintPointer(cursorPos, indexcursor, twoPointer);
                         break;
                 }
             }
@@ -238,19 +239,38 @@ namespace Loading_Login.MenuScreen
         public static void RemovePreviousPointer(int[] cursorPos, int indexcursor)
         {
             //Removes Previous Pointer
-            Console.SetCursorPosition(LeftwindowWidth, cursorPos[indexcursor]);
-            Console.Write(' ');
-            Console.SetCursorPosition(RightwindowWidth, cursorPos[indexcursor]);
-            Console.Write(' ');
+            for (int i = 0; i < 2; i++)
+            {
+                //Remove Horizontally
+                Console.SetCursorPosition(LeftwindowWidth + i, cursorPos[indexcursor]);
+                Console.Write(' ');
+                Console.SetCursorPosition(RightwindowWidth + i, cursorPos[indexcursor]);
+                Console.Write(' ');
+
+                //Remove Vertically
+                Console.SetCursorPosition(LeftwindowWidth + i, cursorPos[indexcursor] + 1);
+                Console.Write(' ');
+                Console.SetCursorPosition(RightwindowWidth + i, cursorPos[indexcursor] + 1);
+                Console.Write(' ');
+            }
         }
-        public static void PrintPointer(int[] cursorPos, int indexcursor)
+        public static void PrintPointer(int[] cursorPos, int indexcursor, bool twoPointer = true)
         {
+
             //Set Color for Pointer
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.SetCursorPosition(RightwindowWidth, cursorPos[indexcursor]);
-            Console.Write("<");
             Console.SetCursorPosition(LeftwindowWidth, cursorPos[indexcursor]);
-            Console.Write(">");
+            Console.Write("->");
+            Console.SetCursorPosition(RightwindowWidth, cursorPos[indexcursor]);
+            Console.Write("<-");
+
+            if (twoPointer)
+            {
+                Console.SetCursorPosition(LeftwindowWidth, cursorPos[indexcursor]+1);
+                Console.Write("->");
+                Console.SetCursorPosition(RightwindowWidth, cursorPos[indexcursor] + 1);
+                Console.Write("<-");
+            }
         }
         #endregion
 
@@ -283,8 +303,8 @@ namespace Loading_Login.MenuScreen
             Console.Write("Exit the Program;");
 
             //Initial Pointer
-            PrintPointer(exitCursor_Pos, 0);
-            int index_exitCursorPos = MenuSelect(exitCursor_Pos);
+            PrintPointer(exitCursor_Pos, 0, false);
+            int index_exitCursorPos = MenuSelect(exitCursor_Pos, false);
 
             if (index_exitCursorPos == 0)
             {

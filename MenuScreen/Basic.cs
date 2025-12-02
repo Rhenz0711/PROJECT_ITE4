@@ -141,7 +141,7 @@ class Basic
             Console.Write("Result: ");
 
             Console.ForegroundColor = ConsoleColor.Green;   
-            Console.Write("{0:n}", Result);
+            Console.Write("{0:n2}", Result);
             Console.ResetColor();                          
 
             Menu.ExitOption(left, Console.CursorTop);

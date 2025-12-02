@@ -55,6 +55,7 @@ class Credits
 
             Thread.Sleep(7000);
             Environment.Exit(0);
+
         }
 
         static void SpecialAudio()
