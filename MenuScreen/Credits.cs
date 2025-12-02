@@ -50,7 +50,7 @@ class Credits
 
             Console.Clear();
             string message = "Thank You.";
-            Console.SetCursorPosition((Console.WindowWidth / 2) - message.Length, Console.WindowHeight / 2);
+            Console.SetCursorPosition((Console.WindowWidth - message.Length)/2, Console.WindowHeight / 2);
             Console.WriteLine(message);
 
             Thread.Sleep(7000);
